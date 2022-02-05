@@ -1,0 +1,41 @@
+body{
+  font-family: sans-serif;
+}
+
+h1{
+  font-family: fantasy;
+}
+
+header{
+  background-size: cover;
+  background-position: center;
+  min-height: 250px;
+}
+
+header h1{
+  cursor: pointer;
+}
+
+main{
+  min-height: 600px;
+}
+
+body .vod_item{
+  transition: 1000ms;
+  cursor: pointer;
+}
+
+body .vod_item:hover{
+  transform: scale(1.05, 1.05);
+}
+
+body .vod_poster{
+  background-size: cover;
+  background-position: center;
+  min-height: 350px;
+  min-width: 130px;
+}
+
+footer{
+  min-height: 60px;
+}
