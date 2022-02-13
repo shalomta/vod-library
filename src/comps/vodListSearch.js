@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import VodItem from './vodItem';
 
-function VodListSearch(props){
+function VodListSearch(props) {
     // A state for the array that holds the movies list
     let [vod_ar, setVodAr] = useState([]);
     let params = useParams();
@@ -21,17 +22,24 @@ function VodListSearch(props){
             console.log(data.data.Search);
             setVodAr(data.data.Search);
         }
+        else{
+            alert('not a valid search');
+            toast.warning('not a valid search');
+        }
     }
 
-    return(
+    return (
         <div className='container'>
-            <div className='row justify-content-center'>
-                {vod_ar.map(item => {
-                    return (
-                        <VodItem key={item.imdbID} item={item} />
-                    )
-                })}
-            </div>
+            {vod_ar[0] ?
+                <div className='row justify-content-center'>
+                    {vod_ar.map(item => {
+                        return (
+                            <VodItem key={item.imdbID} item={item} />
+                        )
+                    })}
+                </div> :
+                <h2 className='text-light text-center'>Loading...</h2>
+            }
         </div>
     )
 }

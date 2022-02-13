@@ -26,13 +26,16 @@ function VodList(props) {
 
     return (
         <div className='container'>
-            <div className='row justify-content-center'>
-                {vod_ar.map(item => {
-                    return (
-                        <VodItem key={item.imdbID} item={item} />
-                    )
-                })}
-            </div>
+            {vod_ar[0] ?
+                <div className='row justify-content-center'>
+                    {vod_ar.map(item => {
+                        return (
+                            <VodItem key={item.imdbID} item={item} />
+                        )
+                    })}
+                </div> :
+                <h2 className='text-light text-center'>Loading...</h2>
+            }
         </div>
     )
 }

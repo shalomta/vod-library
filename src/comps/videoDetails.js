@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import "bootstrap-icons/font/bootstrap-icons.css";
+import Stars from './stars';
 
 function VideoDetails(props) {
     // A state for the video details
     let [vod, setVod] = useState({});
-    // A state for the array for the rating stars classes
-    let [stars_arr, setStarsArr] = useState([]);
     let nav = useNavigate();
     let params = useParams();
 
     useEffect(() => {
         doApi('i=' + params.id);
     }, [params.id,]);
-
-    // Every time the video info changes calculate the stars for the rating
-    useEffect(() => {
-        createStars();
-    }, [vod])
 
     // Getting video detail from the api
     const doApi = async (_params) => {
@@ -27,40 +20,9 @@ function VideoDetails(props) {
         console.log(resp.data);
         setVod(resp.data);
         console.log('doApi');
-        createStars();
     }
 
-    // Creating an array with classes for the rating stars
-    const createStars = () => {
-        let stars = document.createElement('div');
-        let starsArr = [];
-        let i;
-        if (vod.Title) {
-            let votesCounter = vod.imdbRating;
-            console.log(vod.imdbRating + 1);
-            for (let j = 0; j < 10; j++) {
-                if (votesCounter >= 1) {
-
-                    // insert a full star
-                    starsArr = [...starsArr, 'bi bi-star-fill']
-                    votesCounter--;
-                }
-                else if (votesCounter > 0) {
-                    // insert a half star
-                    starsArr = [...starsArr, 'bi bi-star-half']
-                    votesCounter--;
-                }
-                else {
-                    // insert an empty star
-                    starsArr = [...starsArr, 'bi bi-star']
-                    votesCounter--;
-                }
-            }
-        }
-
-        setStarsArr([...starsArr]);
-    }
-
+    // Return to the previous page
     const onBackClick = () => {
         nav(-1);
     }
@@ -86,13 +48,12 @@ function VideoDetails(props) {
                             IMDB rating:
                             {/* Checking if rating exists */}
                             {vod.imdbRating !== 'N/A' ?
-                                <div className='d-flex mx-2'>
-                                    {stars_arr.map((item, i) => {
-                                        // Creating a star (full/half/empty) according to the stars array
-                                        return <i key={i} className={item}></i>
-                                    })}
-                                </div> :' '}
-                                    { vod.imdbRating + '/10   (' + vod.imdbVotes + ')'}
+                                <React.Fragment>
+                                    <Stars votesCounter={vod.imdbRating} />
+                                    {vod.imdbRating + '/10   (' + vod.imdbVotes + ')'}
+                                </React.Fragment>
+                                : <div className='text-danger ms-1'> Not available</div>
+                            }
                         </div>
                         <hr />
                     </div>

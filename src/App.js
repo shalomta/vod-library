@@ -5,6 +5,7 @@ import VodList from './comps/vodList';
 import VodListSearch from './comps/vodListSearch';
 import VodListyear from './comps/vodListYear';
 import VideoDetails from './comps/videoDetails';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/video/:id' element={<VideoDetails />} />
         </Route>
       </Routes>
+      <ToastContainer position='top-left'/>
     </Router>
   );
 }
